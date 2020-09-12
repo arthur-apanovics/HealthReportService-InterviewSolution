@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace HealthReportService.Models
 {
+    [Serializable]
     public class HealthReport
     {
         public int Token { get; set; }

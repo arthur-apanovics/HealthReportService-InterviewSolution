@@ -1,5 +1,8 @@
-﻿namespace HealthReportService.Models
+﻿using System;
+
+namespace HealthReportService.Models
 {
+    [Serializable]
     public class ErrorReport
     {
         public string Source { get; set; }

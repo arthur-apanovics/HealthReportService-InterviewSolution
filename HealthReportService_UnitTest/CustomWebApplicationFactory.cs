@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using HealthReportService.Interfaces;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -23,6 +24,8 @@ namespace HealthReportService_UnitTest
                     loggingBuilder.AddConsole();
                     loggingBuilder.AddDebug();
                 });
+
+                services.AddSingleton<IStorageService, MockStorageService>();
             });
         }
     }

@@ -14,7 +14,9 @@ namespace HealthReportService_UnitTest
 
         public MyHealthTests(ITestOutputHelper output)
         {
-            _healthReportController = new HealthReportController(new XunitLogger<HealthReportController>(output))
+            var mockStorage = new MockStorageService(new XunitLogger<MockStorageService>(output));
+            _healthReportController = new HealthReportController(
+                new XunitLogger<HealthReportController>(output), mockStorage)
                 {
                 // controller relies on Request object for some logging
                 ControllerContext = new ControllerContext
