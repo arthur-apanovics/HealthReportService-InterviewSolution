@@ -12,12 +12,22 @@ namespace HealthReportService.Controllers
         private readonly ILogger<HealthReportController> _logger;
         private readonly IStorageService _storageService;
 
+        /// <summary>
+        /// API controller for Health Report related operations
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="storageService">Service for storing POSTed data, e.g. HealthReport</param>
         public HealthReportController(ILogger<HealthReportController> logger, IStorageService storageService)
         {
             _logger = logger;
             _storageService = storageService;
         }
 
+        /// <summary>
+        /// Receives and stores HealthReport objects
+        /// </summary>
+        /// <param name="healthReport"></param>
+        /// <returns></returns>
         [HttpPost]
         public StatusCodeResult PostMyHealth(HealthReport healthReport)
         {
