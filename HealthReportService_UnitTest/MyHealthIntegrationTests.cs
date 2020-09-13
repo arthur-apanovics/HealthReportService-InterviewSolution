@@ -65,5 +65,46 @@ namespace HealthReportService_UnitTest
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
+
+        [Fact]
+        public async Task PostMyHealth_MalformedPostData_Test()
+        {
+            // Arrange
+            var postObject = new
+            {
+                Token = 1,
+                RegistrationCode = "X345-236-8919640628",
+                Title = "Busfinder Health Report",
+                Version = "1053",
+                Errors = new object[]
+                {
+                    new
+                    {
+                        Source = 123, // << invalid
+                        Message = "Low power warning"
+                    },
+                    new
+                    {
+                        Source = "Communications",
+                        Message = "Network disconnected twice"
+                    }
+                },
+                ButtonPresses = 6,
+                Battery01VoltAvg = 5,
+                Battery02VoltAvg = 4,
+                ChargeCurrentAvg = 3,
+                SunlightAvg = 2,
+                CellBarAvg = 1
+            };
+            var content = new StringContent(
+                JsonSerializer.Serialize(postObject), Encoding.UTF8, MediaTypeNames.Application.Json);
+
+            // Act
+            var uri = GetHealthReportEndpointUriForAction(nameof(HealthReportController.PostMyHealth));
+            var response = await _client.PostAsync(uri, content);
+
+            // Assert
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
     }
 }

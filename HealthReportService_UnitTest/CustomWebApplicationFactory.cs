@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 namespace HealthReportService_UnitTest
 {
     /// <summary>
-    /// Allows us to substitute services
+    /// Allows us to substitute services for integration tests
     /// </summary>
     /// <typeparam name="TStartup"></typeparam>
     public class CustomWebApplicationFactory<TStartup>
