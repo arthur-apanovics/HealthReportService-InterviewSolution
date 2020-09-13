@@ -28,7 +28,6 @@ namespace HealthReportService_UnitTest
         [Fact]
         public async Task PostMyHealthTest()
         {
-            // Arrange
             var postObject = new
             {
                 Token = 1,
@@ -55,21 +54,13 @@ namespace HealthReportService_UnitTest
                 SunlightAvg = 2,
                 CellBarAvg = 1
             };
-            var content = new StringContent(
-                JsonSerializer.Serialize(postObject), Encoding.UTF8, MediaTypeNames.Application.Json);
-
-            // Act
-            var uri = GetHealthReportEndpointUriForAction(nameof(HealthReportController.PostMyHealth));
-            var response = await _client.PostAsync(uri, content);
-
-            // Assert
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            
+            await PostMyHealthReportAndAssert(postObject, HttpStatusCode.OK);
         }
 
         [Fact]
         public async Task PostMyHealth_MalformedPostData_Test()
         {
-            // Arrange
             var postObject = new
             {
                 Token = 1,
@@ -96,6 +87,13 @@ namespace HealthReportService_UnitTest
                 SunlightAvg = 2,
                 CellBarAvg = 1
             };
+
+            await PostMyHealthReportAndAssert(postObject, HttpStatusCode.BadRequest);
+        }
+
+        private async Task PostMyHealthReportAndAssert(object postObject, HttpStatusCode expectedResponse)
+        {
+            // Arrange
             var content = new StringContent(
                 JsonSerializer.Serialize(postObject), Encoding.UTF8, MediaTypeNames.Application.Json);
 
@@ -104,7 +102,7 @@ namespace HealthReportService_UnitTest
             var response = await _client.PostAsync(uri, content);
 
             // Assert
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.Equal(expectedResponse, response.StatusCode);
         }
     }
 }
